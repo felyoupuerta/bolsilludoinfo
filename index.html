@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOLSILLUDO_INFO - Club Nacional de Football</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #1a237e;
+            --color-secondary: #e53935;
+            --color-accent: #ffc107;
+            --color-background: #f5f5f5;
+            --color-text: #333;
+            --color-white: #ffffff;
+            --color-gray: #777;
+            --color-light-gray: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-background);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-white);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-menu a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--color-white);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Portada */
+        .portada {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1595006444255-7e4a5c38b08f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--color-white);
+            padding: 20px;
+        }
+
+        .portada-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .portada-content p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Fixture */
+        .fixture {
+            padding: 60px 0;
+            background-color: var(--color-white);
+        }
+
+        .fixture h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--color-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .fixture h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--color-secondary);
+        }
+
+        .competicion-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .comp-btn {
+            padding: 12px 25px;
+            background-color: var(--color-light-gray);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comp-btn.active, .comp-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .torneo-content {
+            display: none;
+        }
+
+        .torneo-content.active {
+            display: block;
+        }
+
+        .torneo-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+            text-align: center;
+        }
+
+        .partidos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .partido {
+            background-color: var(--color-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .partido:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .jornada-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-light-gray);
+        }
+
+        .equipos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .equipo {
+            font-weight: 600;
+            width: 40%;
+            text-align: center;
+        }
+
+        .equipo.local {
+            text-align: left;
+        }
+
+        .equipo.visitante {
+            text-align: right;
+        }
+
+        .resultado-partido {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            padding: 0 10px;
+        }
+
+        .fecha {
+            text-align: center;
+            color: var(--color-gray);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .estado {
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .estado.ganado {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .estado.perdido {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .estado.empatado {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .estado.pendiente {
+            background-color: #9e9e9e;
+            color: white;
+        }
+
+        .centrar {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Noticias */
+        .noticias {
+            padding: 60px 0;
+            background-color: var(--color-background);
+        }
+
+        .noticias h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--color-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .noticias h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--color-secondary);
+        }
+
+        .noticias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .noticia-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .noticia-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .noticia-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .noticia-content {
+            padding: 20px;
+        }
+
+        .fecha-noticia {
+            color: var(--color-gray);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .noticia-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .noticia-content p {
+            margin-bottom: 20px;
+            color: var(--color-text);
+        }
+
+        .noticia-content a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .noticia-content a:hover {
+            gap: 10px;
+        }
+
+        .centrar-btn {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-vermas {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-vermas:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Galería */
+        .galeria {
+            padding: 60px 0;
+            background-color: var(--color-white);
+        }
+
+        .galeria h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--color-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .galeria h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--color-secondary);
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .galeria-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .galeria-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .galeria-item:hover .galeria-overlay {
+            opacity: 1;
+        }
+
+        .galeria-overlay i {
+            color: var(--color-white);
+            font-size: 2rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-contenido {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        .cerrar {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .cerrar:hover {
+            color: #bbb;
+        }
+
+        .caption-container {
+            text-align: center;
+            background-color: black;
+            padding: 10px;
+            color: white;
+        }
+
+        /* Historia */
+        .historia {
+            padding: 60px 0;
+            background-color: var(--color-background);
+        }
+
+        .historia h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--color-primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .historia h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--color-secondary);
+        }
+
+        .historia-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .historia-texto h3 {
+            font-size: 1.5rem;
+            margin: 25px 0 15px;
+            color: var(--color-primary);
+        }
+
+        .historia-texto p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .historia-logros {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logro {
+            background-color: var(--color-white);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .logro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .logro-numero {
+            display: block;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        .logro-titulo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            padding: 8px 15px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .historia-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .portada-content h2 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--color-primary);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .portada-content h2 {
+                font-size: 2.2rem;
+            }
+
+            .portada-content p {
+                font-size: 1.2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .partidos-grid, .noticias-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .competicion-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .comp-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .portada-content h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="imagenes/Logo.png" alt="Logo Club Nacional">
+                <h1>bolsilludo_info</h1>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#fixture">Fixture</a></li>
+                    <li><a href="#noticias">Noticias</a></li>
+                    <li><a href="#galeria">Galería</a></li>
+                    <li><a href="#historia">Historia</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Portada -->
+    <section id="inicio" class="portada">
+        <div class="portada-content">
+            <h2>Club Nacional de Football</h2>
+            <p>El más grande de Uruguay</p>
+        </div>
+    </section>
+
+    <!-- Fixture y Resultados - SECCIÓN ACTUALIZADA -->
+    <section id="fixture" class="fixture">
+        <div class="container">
+            <h2>Fixture y Resultados</h2>
+            
+            <div class="competicion-selector">
+                <button class="comp-btn active" data-comp="apertura">Torneo Apertura</button>
+                <button class="comp-btn" data-comp="intermedio">Torneo Intermedio</button>
+                <button class="comp-btn" data-comp="clausura">Torneo Clausura</button>
+                <button class="comp-btn" data-comp="libertadores">Copa Libertadores</button>
+                <button class="comp-btn" data-comp="uruguay">Copa Uruguay</button>
+            </div>
+            
+            <div class="fixture-container">
+                <!-- Torneo Apertura -->
+                <div id="apertura" class="torneo-content active">
+                    <h3>Torneo Apertura 2025 <span class="torneo-status status-completed">Finalizado</span></h3>
+                    <div class="partidos-grid" id="fixture-apertura">
+                        <!-- Los partidos se cargarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Torneo Intermedio -->
+                <div id="intermedio" class="torneo-content">
+                    <h3>Torneo Intermedio 2025 <span class="torneo-status status-completed">Finalizado</span></h3>
+                    <div class="partidos-grid" id="fixture-intermedio">
+                        <!-- Los partidos se cargarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Torneo Clausura -->
+                <div id="clausura" class="torneo-content">
+                    <h3>Torneo Clausura 2025 <span class="torneo-status status-ongoing">En curso</span></h3>
+                    <div class="partidos-grid" id="fixture-clausura">
+                        <!-- Los partidos se cargarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Copa Libertadores -->
+                <div id="libertadores" class="torneo-content">
+                    <h3>Copa Libertadores 2025 <span class="torneo-status status-completed">Finalizado</span></h3>
+                    <div class="partidos-grid" id="fixture-libertadores">
+                        <!-- Los partidos se cargarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Copa Uruguay -->
+                <div id="uruguay" class="torneo-content">
+                    <h3>Copa Uruguay 2025 <span class="torneo-status status-upcoming">Próximamente</span></h3>
+                    <div class="partidos-grid" id="fixture-uruguay">
+                        <!-- Los partidos se cargarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Noticias Históricas -->
+<section id="noticias" class="noticias">
+    <div class="container">
+        <h2>Noticias Históricas del Club</h2>
+        <div class="noticias-grid">
+            
+            <!-- Quinquenio de Oro -->
+            <article class="noticia-card">
+                <div class="noticia-img" style="background-image: url('imagenes/quinquenio.jpg');"></div>
+                <div class="noticia-content">
+                    <span class="fecha-noticia"><strong>BolsilludoInfo</strong></span>
+                    <h3>El “Quinquenio de Oro” (1939–1943)</h3>
+                    <p>Entre 1939 y 1943, Nacional vivió su era dorada, conquistando cinco campeonatos
+                       uruguayos consecutivos y estableciendo récords históricos, como diez clásicos
+                       seguidos ganados.</p>
+                    <a href="#">Leer más <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <!-- Primera victoria internacional de Uruguay (1903) -->
+            <article class="noticia-card">
+                <div class="noticia-img" style="background-image: url('imagenes/nacional_es_uruguay.jpg');"></div>
+                <div class="noticia-content">
+                    <span class="fecha-noticia"><strong>BolsilludoInfo</strong></span>
+                    <h3>1903: Nacional es Uruguay</h3>
+                    <p>El 13 de septiembre de 1903, la selección de Uruguay estaba formada solo por 
+                       jugadores de Nacional. Ese día vencieron 3-2 a Argentina en Buenos Aires,
+                       logrando la primera victoria internacional de la Celeste.</p>
+                    <a href="#">Leer más <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <!-- Abdón Porte -->
+            <article class="noticia-card">
+                <div class="noticia-img" style="background-image: url('imagenes/abdon_porte_2.jpg');"></div>
+                <div class="noticia-content">
+                    <span class="fecha-noticia"><strong>BolsilludoInfo</strong></span>
+                    <h3>La leyenda de Abdón Porte (1918)</h3>
+                    <p>El capitán tricolor Abdón Porte se quitó la vida en el círculo central del Gran Parque 
+                       Central en 1918, dejando una huella imborrable en la historia del club y del fútbol
+                       uruguayo.</p>
+                    <a href="#">Leer más <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <!-- 125 años de Nacional -->
+            <article class="noticia-card">
+                <div class="noticia-img" style="background-image: url('imagenes/125_aniversario.jpg');"></div>
+                <div class="noticia-content">
+                    <span class="fecha-noticia"><strong>BolsilludoInfo</strong></span>
+                    <h3>125 años de historia tricolor</h3>
+                    <p>En 2024 Nacional celebró sus 125 años con un emotivo video que reunió a ídolos 
+                       de distintas épocas, recordando logros como la Libertadores e Intercontinental.</p>
+                    <a href="#">Leer más <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Galería Multimedia -->
+    <section id="galeria" class="galeria">
+        <div class="container">
+            <h2>Galería Bolsilluda</h2>
+            <div class="galeria-grid">
+                <div class="galeria-item" data-src="imagenes/suarez_copa.jpeg">
+                    <img src="imagenes/suarez_copa.jpeg" alt="Luis Suárez con la copa">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="galeria-item" data-src="imagenes/gol_recoba.jpeg">
+                    <img src="imagenes/gol_recoba.jpeg" alt="Gol chino Recoba">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="galeria-item" data-src="imagenes/gol_diente.jpeg">
+                    <img src="imagenes/gol_diente.jpeg" alt="Gol del Diente Lopez a Palmeiras">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="galeria-item" data-src="imagenes/GPCfto.jpg">
+                    <img src="imagenes/GPCfto.jpg" alt="Estadio Gran Parque Central">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="galeria-item" data-src="imagenes/vergessio.jpeg">
+                    <img src="imagenes/vergessio.jpeg" alt="Gonzalo Bergessio máximo goleador tricolor del siglo XXI">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="galeria-item" data-src="imagenes/hugodeleon.jpeg">
+                    <img src="imagenes/hugodeleon.jpeg" alt="Historia en la libertadores">
+                    <div class="galeria-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal para visualización de imágenes -->
+            <div id="modal-galeria" class="modal">
+                <span class="cerrar">&times;</span>
+                <img class="modal-contenido" id="img-modal">
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historia del Club -->
+    <section id="historia" class="historia">
+        <div class="container">
+            <h2>Historia del Club</h2>
+            <div class="historia-content">
+                <div class="historia-texto">
+                    <p>El Club Nacional de Football es una institución deportiva uruguaya fundada el 14 de mayo de 1899, fruto de la fusión de dos clubes pioneros: Uruguay Athletic Club y Montevideo Football Club. Es uno de los clubes más tradicionales y exitosos del fútbol uruguayo y mundial.</p>
+                    
+                    <p>Conocido como "el club más grande de América" por sus logros internacionales, Nacional ha obtenido tres Copas Intercontinentales (1971, 1980, 1988), tres Copas Libertadores de América (1971, 1980, 1988) y 49 campeonatos uruguayos, siendo el equipo con más títulos nacionales en Uruguay.</p>
+                    
+                    <p>El equipo juega de local en el Gran Parque Central, estadio con capacidad para 34,000 espectadores y reconocido por la FIFA como el primer estadio en albergar un partido de la Copa del Mundo (en el Mundial de 1930).</p>
+                    
+                    <h3>Jugadores Históricos</h3>
+                    <p>Por sus filas han pasado leyendas del fútbol mundial como Atilio García (máximo goleador histórico), Héctor Scarone, Luis Cubilla, Víctor Espárrago, Hugo de León, Arsenio Luzardo, Daniel Onega, Waldemar Victorino, Santiago Ostolaza, Álvaro Recoba, Diego Lugano, Sebastián Abreu y Luis Suárez.</p>
+                    
+                    <h3>Rivalidades</h3>
+                    <p>Su clásico rival es Peñarol, con quien disputa el "Superclásico" del fútbol uruguayo, considerado uno de los encuentros más apasionantes del mundo. La rivalidad trasciende lo deportivo y se enmarca en una dicotomía social e histórica dentro de la sociedad uruguaya.</p>
+                    
+                    <h3>Época Dorada</h3>
+                    <p>Los años 70 y 80 representaron la época más gloriosa del club, con la obtención de las Copas Libertadores e Intercontinentales bajo el liderazgo de jugadores como Luis Cubilla y Víctor Espárrago, y la dirección técnica de Juan Martín Mujica.</p>
+                    
+                    <h3>El Renacimiento en el Siglo XXI</h3>
+                    <p>Después de algunos años de sequía, Nacional resurgió en la segunda década del siglo XXI con varios campeonatos uruguayos y destacadas participaciones internacionales, reafirmando su lugar entre los grandes del continente.</p>
+                </div>
+                <div class="historia-logros">
+                    <div class="logro">
+                        <span class="logro-numero">49</span>
+                        <span class="logro-titulo">Campeonatos Uruguayos</span>
+                    </div>
+                    <div class="logro">
+                        <span class="logro-numero">3</span>
+                        <span class="logro-titulo">Copas Libertadores</span>
+                    </div>
+                    <div class="logro">
+                        <span class="logro-numero">3</span>
+                        <span class="logro-titulo">Copas Intercontinentales</span>
+                    </div>
+                    <div class="logro">
+                        <span class="logro-numero">5</span>
+                        <span class="logro-titulo">Recopas Sudamericanas</span>
+                    </div>
+                    <div class="logro">
+                        <span class="logro-numero">22</span>
+                        <span class="logro-titulo">Copas Nacionales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>bolsilludo_info</h3>
+                    <p>La mejor fuente de información sobre el Club Nacional de Football</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/bolsilludo_info/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i> Seguinos en Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 bolsilludo_info - Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+// Datos actualizados de los fixtures
+const fixturesData = {
+    apertura: [
+        {
+            jornada: "Torneo Apertura 2025",
+            partidos: [
+                { local: "City Torque", resultado: "1 - 0", visitante: "Nacional", fecha: "Fecha 1", estado: "Finalizado", clase: "perdido" },
+                { local: "Nacional", resultado: "1 - 1", visitante: "Peñarol", fecha: "Fecha 2", estado: "Finalizado", clase: "empatado" },
+                { local: "Progreso", resultado: "1 - 5", visitante: "Nacional", fecha: "Fecha 3", estado: "Finalizado", clase: "ganado" },
+                { local: "Boston River", resultado: "2 - 3", visitante: "Nacional", fecha: "Fecha 4", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "3 - 3", visitante: "River Plate", fecha: "Fecha 5", estado: "Finalizado", clase: "empatado" },
+                { local: "Racing", resultado: "0 - 1", visitante: "Nacional", fecha: "Fecha 6", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "1 - 1", visitante: "Plaza Colonia", fecha: "Fecha 7", estado: "Finalizado", clase: "empatado" },
+                { local: "Liverpool", resultado: "2 - 2", visitante: "Nacional", fecha: "Fecha 8", estado: "Finalizado", clase: "empatado" },
+                { local: "Nacional", resultado: "1 - 2", visitante: "Juventud", fecha: "Fecha 9", estado: "Finalizado", clase: "perdido" },
+                { local: "Cerro Largo", resultado: "0 - 4", visitante: "Nacional", fecha: "Fecha 10", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "2 - 0", visitante: "Danubio", fecha: "Fecha 11", estado: "Finalizado", clase: "ganado" },
+                { local: "Miramar M", resultado: "1 - 3", visitante: "Nacional", fecha: "Fecha 12", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "3 - 1", visitante: "Wanderers", fecha: "Fecha 13", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "4 - 0", visitante: "Cerro", fecha: "Fecha 14", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "2 - 1", visitante: "Defensor Sporting", fecha: "Fecha 15", estado: "Finalizado", clase: "ganado" }
+            ]
+        }
+    ],
+    intermedio: [
+        {
+            jornada: "Torneo Intermedio 2025",
+            partidos: [
+                { local: "Nacional", resultado: "1 - 0", visitante: "Progreso", fecha: "Fecha 1", estado: "Finalizado", clase: "ganado" },
+                { local: "City Torque", resultado: "1 - 2", visitante: "Nacional", fecha: "Fecha 2", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "4 - 1", visitante: "Juventud", fecha: "Fecha 3", estado: "Finalizado", clase: "ganado" },
+                { local: "Miramar M", resultado: "0 - 2", visitante: "Nacional", fecha: "Fecha 4", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "3 - 2", visitante: "Danubio", fecha: "Fecha 5", estado: "Finalizado", clase: "ganado" },
+                { local: "Peñarol", resultado: "0(5) - (3)0", visitante: "Nacional", fecha: "Final - Penales", estado: "Finalizado", clase: "perdido" }
+            ]
+        }
+    ],
+    clausura: [
+        {
+            jornada: "Torneo Clausura 2025",
+            partidos: [
+                { local: "Nacional", resultado: "5 - 2", visitante: "City Torque", fecha: "Fecha 1", estado: "Finalizado", clase: "ganado" },
+                { local: "Peñarol", resultado: "3 - 0", visitante: "Nacional", fecha: "Fecha 2", estado: "Finalizado", clase: "perdido" },
+                { local: "Nacional", resultado: "3 - 1", visitante: "Progreso", fecha: "Fecha 3", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "vs", visitante: "Boston River", fecha: "Fecha 4", estado: "Por jugar", clase: "pendiente" },
+                { local: "River Plate", resultado: "vs", visitante: "Nacional", fecha: "Fecha 5", estado: "Por jugar", clase: "pendiente" },
+                { local: "Nacional", resultado: "vs", visitante: "Racing", fecha: "Fecha 6", estado: "Por jugar", clase: "pendiente" },
+                { local: "Plaza Colonia", resultado: "vs", visitante: "Nacional", fecha: "Fecha 7", estado: "Por jugar", clase: "pendiente" },
+                { local: "Nacional", resultado: "vs", visitante: "Liverpool", fecha: "Fecha 8", estado: "Por jugar", clase: "pendiente" },
+                { local: "Juventud", resultado: "vs", visitante: "Nacional", fecha: "Fecha 9", estado: "Por jugar", clase: "pendiente" },
+                { local: "Nacional", resultado: "vs", visitante: "Cerro Largo", fecha: "Fecha 10", estado: "Por jugar", clase: "pendiente" },
+                { local: "Danubio", resultado: "vs", visitante: "Nacional", fecha: "Fecha 11", estado: "Por jugar", clase: "pendiente" },
+                { local: "Nacional", resultado: "vs", visitante: "Miramar M", fecha: "Fecha 12", estado: "Por jugar", clase: "pendiente" },
+                { local: "Wanderers", resultado: "vs", visitante: "Nacional", fecha: "Fecha 13", estado: "Por jugar", clase: "pendiente" },
+                { local: "Cerro", resultado: "vs", visitante: "Nacional", fecha: "Fecha 14", estado: "Por jugar", clase: "pendiente" },
+                { local: "Defensor Sporting", resultado: "vs", visitante: "Nacional", fecha: "Fecha 15", estado: "Por jugar", clase: "pendiente" }
+            ]
+        }
+    ],
+    libertadores: [
+        {
+            jornada: "Copa Libertadores 2025",
+            partidos: [
+                { local: "Atl. Nacional", resultado: "3 - 0", visitante: "Nacional", fecha: "Fase de Grupos", estado: "Finalizado", clase: "perdido" },
+                { local: "Nacional", resultado: "0 - 1", visitante: "Bahia", fecha: "Fase de Grupos", estado: "Finalizado", clase: "perdido" },
+                { local: "Internacional", resultado: "3 - 3", visitante: "Nacional", fecha: "Fase de Grupos", estado: "Finalizado", clase: "empatado" },
+                { local: "Bahia", resultado: "1 - 3", visitante: "Nacional", fecha: "Fase de Grupos", estado: "Finalizado", clase: "ganado" },
+                { local: "Nacional", resultado: "0 - 2", visitante: "Internacional", fecha: "Fase de Grupos", estado: "Finalizado", clase: "perdido" },
+                { local: "Nacional", resultado: "1 - 0", visitante: "Atl. Nacional", fecha: "Fase de Grupos", estado: "Finalizado", clase: "ganado" }
+            ]
+        }
+    ],
+    uruguay: [
+        {
+            jornada: "Copa Uruguay 2025",
+            partidos: [
+                { local: "Huracán (URU)", resultado: "vs", visitante: "Nacional", fecha: "26/08 | 20:30h", estado: "Por jugar", clase: "pendiente" }
+            ]
+        }
+    ]
+};
+
+// Función para renderizar los fixtures
+function renderFixtures() {
+    for (const competicion in fixturesData) {
+        const container = document.getElementById(`fixture-${competicion}`);
+        if (!container) continue;
+
+        container.innerHTML = '';
+
+        fixturesData[competicion].forEach(jornada => {
+            const jornadaElement = document.createElement('details');
+            jornadaElement.classList.add('jornada');
+            jornadaElement.open = true;
+
+            const jornadaTitle = document.createElement('summary');
+            jornadaTitle.classList.add('jornada-title');
+            jornadaTitle.textContent = jornada.jornada;
+            jornadaElement.appendChild(jornadaTitle);
+
+            jornada.partidos.forEach(partido => {
+                const partidoElement = document.createElement('div');
+                partidoElement.classList.add('partido');
+
+                partidoElement.innerHTML = `
+                    <div class="equipos">
+                        <span class="equipo local">${partido.local}</span>
+                        <span class="resultado-partido">${partido.resultado}</span>
+                        <span class="equipo visitante">${partido.visitante}</span>
+                    </div>
+                    <div class="fecha">${partido.fecha}</div>
+                    <div class="centrar"><div class="estado ${partido.clase}">${partido.estado}</div></div>
+                `;
+
+                jornadaElement.appendChild(partidoElement);
+            });
+
+            container.appendChild(jornadaElement);
+        });
+    }
+}
+
+// Menú responsivo
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    hamburger.classList.toggle('active');
+});
+
+// Cerrar menú al hacer clic en un enlace
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+    });
+});
+
+// Selector de competiciones
+const compButtons = document.querySelectorAll('.comp-btn');
+const compContents = document.querySelectorAll('.torneo-content');
+
+compButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const compId = button.getAttribute('data-comp');
+
+        compButtons.forEach(btn => btn.classList.remove('active'));
+        compContents.forEach(content => content.classList.remove('active'));
+
+        button.classList.add('active');
+        document.getElementById(compId).classList.add('active');
+    });
+});
+
+// Galería modal
+const modal = document.getElementById("modal-galeria");
+const modalImg = document.getElementById("img-modal");
+const captionText = document.getElementById("caption");
+const galleryItems = document.querySelectorAll('.galeria-item');
+
+galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+        modal.style.display = "block";
+        modalImg.src = item.getAttribute('data-src');
+        captionText.innerHTML = item.querySelector('img').alt;
+    });
+});
+
+// Cerrar modal
+document.querySelector('.cerrar').addEventListener('click', () => {
+    modal.style.display = "none";
+});
+
+// Cerrar modal al hacer clic fuera de la imagen
+window.addEventListener('click', (event) => {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+});
+
+// Inicializar la página
+document.addEventListener('DOMContentLoaded', () => {
+    renderFixtures();
+});
+</script>
+
+
+
+
+
+</body>
+</html>
